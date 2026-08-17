@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}AP Welfare Fraud Detection{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+
+<div class="seal-watermark" aria-hidden="true">
+  <svg viewBox="0 0 200 200" width="100%" height="100%">
+    <circle cx="100" cy="100" r="92" fill="none" stroke="currentColor" stroke-width="2"/>
+    <circle cx="100" cy="100" r="76" fill="none" stroke="currentColor" stroke-width="1"/>
+    <text x="100" y="106" text-anchor="middle" font-family="IBM Plex Mono" font-size="13" letter-spacing="2" fill="currentColor">AP · FRAUD AUDIT</text>
+  </svg>
+</div>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="{{ url_for('dashboard') }}">
+      <span class="brand-seal">
+        <svg viewBox="0 0 48 48" width="34" height="34">
+          <circle cx="24" cy="24" r="21" fill="none" stroke="currentColor" stroke-width="2.4"/>
+          <circle cx="24" cy="24" r="14" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M24 12 L27 20 L24 24 L21 20 Z" fill="currentColor"/>
+        </svg>
+      </span>
+      <span class="brand-text">
+        <strong>AP Welfare</strong>
+        <em>Fraud Audit System</em>
+      </span>
+    </a>
+    <nav class="mainnav">
+      <a href="{{ url_for('dashboard') }}" class="{{ 'is-active' if active_page == 'dashboard' }}">Dashboard</a>
+      <a href="{{ url_for('predict') }}" class="{{ 'is-active' if active_page == 'predict' }}">Check a Claim</a>
+      <a href="{{ url_for('analytics') }}" class="{{ 'is-active' if active_page == 'analytics' }}">Analytics</a>
+      <a href="{{ url_for('about') }}" class="{{ 'is-active' if active_page == 'about' }}">About</a>
+    </nav>
+  </div>
+</header>
+
+<main class="page">
+{% block content %}{% endblock %}
+</main>
+
+<footer class="sitefooter">
+  <div class="sitefooter-inner">
+    <span>AP Welfare Fraud Audit System &mdash; Academic ML Project</span>
+    <span class="dim">Random Forest Classifier · Flask · scikit-learn</span>
+  </div>
+</footer>
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>
