@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block title %}Dashboard · AP Welfare Fraud Audit System{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="hero-eyebrow">LIVE AUDIT LEDGER &middot; {{ stats.total_schemes }} SCHEMES &middot; {{ stats.total_districts }} DISTRICTS</div>
+  <h1>Every welfare claim,<br>cross-checked against the ledger.</h1>
+  <p class="hero-sub">
+    A Random Forest classifier trained on {{ "{:,}".format(stats.total_beneficiaries) }} Andhra Pradesh
+    welfare-scheme records flags duplicate identities, abnormal claim behaviour and high-risk
+    locations before a rupee goes out the door.
+  </p>
+</section>
+
+<section class="stat-grid">
+  <div class="stat-card">
+    <span class="stat-label">Total Beneficiaries</span>
+    <span class="stat-value">{{ "{:,}".format(stats.total_beneficiaries) }}</span>
+    <span class="stat-foot">across {{ stats.total_schemes }} welfare schemes</span>
+  </div>
+  <div class="stat-card is-safe">
+    <span class="stat-label">Genuine Claims</span>
+    <span class="stat-value">{{ "{:,}".format(stats.genuine_count) }}</span>
+    <span class="stat-foot">verified, no active flags</span>
+  </div>
+  <div class="stat-card is-alert">
+    <span class="stat-label">Fraudulent Claims</span>
+    <span class="stat-value">{{ "{:,}".format(stats.fraud_count) }}</span>
+    <span class="stat-foot">{{ stats.fraud_percentage }}% of all claims</span>
+  </div>
+  <div class="stat-card is-warn">
+    <span class="stat-label">High-Risk Locations</span>
+    <span class="stat-value">{{ "{:,}".format(stats.high_risk_count) }}</span>
+    <span class="stat-foot">claims flagged by geography</span>
+  </div>
+</section>
+
+<section class="panel-grid">
+  <div class="panel panel-chart">
+    <div class="panel-head">
+      <h2>Claim Distribution</h2>
+      <span class="panel-sub">Genuine vs. fraudulent, ledger-wide</span>
+    </div>
+    <canvas id="distributionChart" height="240"></canvas>
+  </div>
+
+  <div class="panel panel-chart">
+    <div class="panel-head">
+      <h2>Fraud Count by Scheme</h2>
+      <span class="panel-sub">Flagged claims per welfare programme</span>
+    </div>
+    <canvas id="schemeChart" height="240"></canvas>
+  </div>
+
+  <div class="panel panel-model">
+    <div class="panel-head">
+      <h2>Model Performance</h2>
+      <span class="panel-sub">Random Forest &middot; held-out test set</span>
+    </div>
+    <div class="seal-metric-grid">
+      <div class="seal-metric">
+        <div class="seal">{{ (metrics.accuracy * 100) | round(1) }}<small>%</small></div>
+        <span>Accuracy</span>
+      </div>
+      <div class="seal-metric">
+        <div class="seal">{{ (metrics.precision * 100) | round(1) }}<small>%</small></div>
+        <span>Precision</span>
+      </div>
+      <div class="seal-metric">
+        <div class="seal">{{ (metrics.recall * 100) | round(1) }}<small>%</small></div>
+        <span>Recall</span>
+      </div>
+      <div class="seal-metric">
+        <div class="seal">{{ (metrics.f1_score * 100) | round(1) }}<small>%</small></div>
+        <span>F1 Score</span>
+      </div>
+      <div class="seal-metric">
+        <div class="seal">{{ (metrics.roc_auc * 100) | round(1) }}<small>%</small></div>
+        <span>ROC-AUC</span>
+      </div>
+    </div>
+    <div class="model-footnote">
+      Trained on {{ "{:,}".format(metrics.n_train_samples) }} records &middot;
+      tested on {{ "{:,}".format(metrics.n_test_samples) }} records &middot;
+      {{ metrics.n_features }} model features
+    </div>
+    <a class="btn btn-primary" href="{{ url_for('predict') }}">Run a claim check &rarr;</a>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const distributionCtx = document.getElementById('distributionChart');
+new Chart(distributionCtx, {
+  type: 'doughnut',
+  data: {
+    labels: {{ distribution_labels | safe }},
+    datasets: [{
+      data: {{ distribution_values | safe }},
+      backgroundColor: ['#2BB3A3', '#E4572E'],
+      borderColor: '#171F3D',
+      borderWidth: 3,
+    }]
+  },
+  options: {
+    plugins: { legend: { position: 'bottom', labels: { color: '#C9D0EC', font: { family: 'Inter' } } } },
+    cutout: '68%'
+  }
+});
+
+const schemeCtx = document.getElementById('schemeChart');
+new Chart(schemeCtx, {
+  type: 'bar',
+  data: {
+    labels: {{ scheme_labels | safe }},
+    datasets: [{
+      label: 'Fraud Cases',
+      data: {{ scheme_values | safe }},
+      backgroundColor: '#E3A008',
+      borderRadius: 6,
+      maxBarThickness: 46
+    }]
+  },
+  options: {
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { color: '#9AA3C2', font: { family: 'Inter', size: 11 } }, grid: { display: false } },
+      y: { ticks: { color: '#9AA3C2' }, grid: { color: 'rgba(255,255,255,0.06)' } }
+    }
+  }
+});
+</script>
+{% endblock %}
