@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}Analytics · AP Welfare Fraud Audit System{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <div class="hero-eyebrow">DEEPER ANALYSIS</div>
+  <h1>Fraud patterns across the ledger</h1>
+  <p class="hero-sub">Fraud rate (%) broken down by scheme, district, gender, age band,
+    income band and location-risk category, alongside the model's evaluation metrics.</p>
+</section>
+
+<section class="panel-grid">
+  <div class="panel panel-chart">
+    <div class="panel-head"><h2>Fraud Rate by Scheme</h2></div>
+    <canvas id="schemeChart" height="220"></canvas>
+  </div>
+  <div class="panel panel-chart">
+    <div class="panel-head"><h2>Fraud Rate by Gender</h2></div>
+    <canvas id="genderChart" height="220"></canvas>
+  </div>
+  <div class="panel panel-chart">
+    <div class="panel-head"><h2>Fraud Rate by Location Risk</h2></div>
+    <canvas id="locationChart" height="220"></canvas>
+  </div>
+  <div class="panel panel-chart">
+    <div class="panel-head"><h2>Fraud Rate by Age Band</h2></div>
+    <canvas id="ageChart" height="220"></canvas>
+  </div>
+  <div class="panel panel-chart">
+    <div class="panel-head"><h2>Fraud Rate by Income Band</h2></div>
+    <canvas id="incomeChart" height="220"></canvas>
+  </div>
+  <div class="panel panel-chart panel-wide">
+    <div class="panel-head"><h2>Fraud Rate by District</h2></div>
+    <canvas id="districtChart" height="260"></canvas>
+  </div>
+</section>
+
+<section class="panel">
+  <div class="panel-head">
+    <h2>Model Evaluation Detail</h2>
+    <span class="panel-sub">Random Forest Classifier &middot; confusion matrix breakdown</span>
+  </div>
+  <div class="eval-grid">
+    <div class="eval-cell is-safe">
+      <span class="eval-num">{{ metrics.true_negatives }}</span>
+      <span class="eval-label">True Negatives<br>genuine, correctly cleared</span>
+    </div>
+    <div class="eval-cell is-warn">
+      <span class="eval-num">{{ metrics.false_positives }}</span>
+      <span class="eval-label">False Positives<br>genuine, wrongly flagged</span>
+    </div>
+    <div class="eval-cell is-warn">
+      <span class="eval-num">{{ metrics.false_negatives }}</span>
+      <span class="eval-label">False Negatives<br>fraud, missed by model</span>
+    </div>
+    <div class="eval-cell is-alert">
+      <span class="eval-num">{{ metrics.true_positives }}</span>
+      <span class="eval-label">True Positives<br>fraud, correctly caught</span>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function barChart(id, labels, values, color) {
+  new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: { labels: labels, datasets: [{ data: values, backgroundColor: color, borderRadius: 6, maxBarThickness: 40 }] },
+    options: {
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#9AA3C2', font: { size: 10 } }, grid: { display: false } },
+        y: { ticks: { color: '#9AA3C2', callback: (v) => v + '%' }, grid: { color: 'rgba(255,255,255,0.06)' } }
+      }
+    }
+  });
+}
+
+function horizontalBarChart(id, labels, values, color) {
+  new Chart(document.getElementById(id), {
+    type: 'bar',
+    data: { labels: labels, datasets: [{ data: values, backgroundColor: color, borderRadius: 4 }] },
+    options: {
+      indexAxis: 'y',
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { ticks: { color: '#9AA3C2', callback: (v) => v + '%' }, grid: { color: 'rgba(255,255,255,0.06)' } },
+        y: { ticks: { color: '#9AA3C2', font: { size: 10 } }, grid: { display: false } }
+      }
+    }
+  });
+}
+
+barChart('schemeChart', {{ charts.scheme_labels | safe }}, {{ charts.scheme_values | safe }}, '#E3A008');
+barChart('genderChart', {{ charts.gender_labels | safe }}, {{ charts.gender_values | safe }}, '#2BB3A3');
+barChart('locationChart', {{ charts.location_labels | safe }}, {{ charts.location_values | safe }}, '#E4572E');
+barChart('ageChart', {{ charts.age_labels | safe }}, {{ charts.age_values | safe }}, '#7C8CF8');
+barChart('incomeChart', {{ charts.income_labels | safe }}, {{ charts.income_values | safe }}, '#E3A008');
+horizontalBarChart('districtChart', {{ charts.district_labels | safe }}, {{ charts.district_values | safe }}, '#E4572E');
+</script>
+{% endblock %}
