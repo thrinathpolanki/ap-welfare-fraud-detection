@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% block title %}About · AP Welfare Fraud Audit System{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <div class="hero-eyebrow">PROJECT DOCUMENTATION</div>
+  <h1>About this project</h1>
+  <p class="hero-sub">Fraud Detection in Andhra Pradesh Welfare Schemes Using Machine Learning</p>
+</section>
+
+<section class="about-grid">
+  <article class="about-card">
+    <h3>01 &middot; Problem Statement</h3>
+    <p>State welfare disbursement across schemes such as Thalliki Vandanam, NTR Bharosa
+      Pension, Annadata and Deepam 2.0 moves large sums of public money to millions of
+      beneficiaries. Manual verification cannot scale to catch duplicate identities,
+      abnormal claim patterns or coordinated fraud in real time, which allows fraudulent
+      claims to drain funds meant for genuine citizens.</p>
+  </article>
+
+  <article class="about-card">
+    <h3>02 &middot; Dataset</h3>
+    <p>A synthetic dataset of 100,000 beneficiary records across 19 attributes, modelled on
+      realistic Andhra Pradesh districts, villages and scheme parameters. Fraud labels are
+      generated from a weighted combination of duplicate Aadhaar/mobile numbers, prior fraud
+      history, abnormal claim frequency, high transaction counts and location risk &mdash;
+      not from random assignment &mdash; so the resulting patterns are learnable.</p>
+  </article>
+
+  <article class="about-card">
+    <h3>03 &middot; Machine Learning Approach</h3>
+    <p>Raw fields are cleaned and enriched with engineered features (age/income/claim
+      bands, combined risk scores, date-derived features), one-hot encoded and scaled
+      through a single scikit-learn <code>ColumnTransformer</code>, then classified with a
+      <code>RandomForestClassifier</code> (300 trees, balanced class weights). The identical
+      pipeline is reused for training and for every live prediction.</p>
+  </article>
+
+  <article class="about-card">
+    <h3>04 &middot; Technologies Used</h3>
+    <p>Python, Pandas, NumPy, scikit-learn, Matplotlib, Seaborn for the data science layer;
+      Flask for the web application; HTML5, CSS3, vanilla JavaScript and Chart.js for the
+      dashboard. No external database is used &mdash; the CSV dataset and serialized model
+      artifacts are the system of record.</p>
+  </article>
+
+  <article class="about-card">
+    <h3>05 &middot; Project Objective</h3>
+    <p>Demonstrate an end-to-end, reproducible ML pipeline &mdash; from synthetic data
+      generation through preprocessing, EDA, feature engineering, model training,
+      evaluation and deployment behind a usable web interface &mdash; suitable for a
+      B.Tech final-year academic review.</p>
+  </article>
+
+  <article class="about-card">
+    <h3>06 &middot; Expected Outcome</h3>
+    <p>A working fraud-risk classifier that flags high-risk welfare claims with a clear
+      probability score and named risk indicators, plus a dashboard that lets reviewers
+      explore fraud patterns by scheme, district, demographic and risk category.</p>
+  </article>
+</section>
+
+<section class="panel">
+  <div class="panel-head">
+    <h2>Project Architecture</h2>
+  </div>
+  <pre class="architecture-tree">AP_Welfare_Fraud_Detection/
+├── dataset/                    Generated 100,000-record CSV dataset
+├── models/                     Trained model, preprocessor, metrics
+├── visualizations/             Saved EDA and evaluation charts
+├── templates/ + static/        Flask dashboard front end
+├── generate_dataset.py         Synthetic dataset generation
+├── data_preprocessing.py       Cleaning, encoding, scaling, splitting
+├── dataset_analysis.py         Structural / statistical dataset summary
+├── eda.py                      Exploratory data analysis charts
+├── feature_engineering.py      Engineered risk features
+├── train_model.py              Random Forest training + metrics
+├── evaluate_model.py           Confusion matrix / ROC / feature importance
+├── predict.py                  Reusable prediction service
+└── app.py                      Flask application (this dashboard)</pre>
+</section>
+
+<section class="about-grid">
+  <article class="about-card">
+    <h3>Future Scope</h3>
+    <p>Integrate real disbursement data feeds, add explainability (e.g. SHAP) to the
+      prediction page, support model retraining from the dashboard, and extend
+      coverage to additional welfare schemes and states.</p>
+  </article>
+  <article class="about-card">
+    <h3>Conclusion</h3>
+    <p>This project shows that a well-engineered, interpretable classical ML model
+      &mdash; not just deep learning &mdash; can deliver strong fraud-detection
+      performance while remaining transparent enough for a government audit context.</p>
+  </article>
+</section>
+{% endblock %}
