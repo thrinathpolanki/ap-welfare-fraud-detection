@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% block title %}Check a Claim · AP Welfare Fraud Audit System{% endblock %}
+
+{% block content %}
+<section class="page-head">
+  <div class="hero-eyebrow">CLAIM VERIFICATION</div>
+  <h1>Check a beneficiary claim</h1>
+  <p class="hero-sub">Enter the claim details exactly as collected on the application form. The
+    same preprocessing pipeline used to train the model is applied to your entry.</p>
+</section>
+
+<section class="predict-layout">
+  <form class="ledger-form" method="POST" action="{{ url_for('predict') }}">
+    <div class="form-section">
+      <h3>Beneficiary Details</h3>
+      <div class="form-row">
+        <label>District
+          <select name="District" required>
+            {% for d in districts %}
+            <option value="{{ d }}" {{ 'selected' if form_data.get('District') == d }}>{{ d }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label>Welfare Scheme
+          <select name="Scheme_Name" required>
+            {% for s in schemes %}
+            <option value="{{ s }}" {{ 'selected' if form_data.get('Scheme_Name') == s }}>{{ s }}</option>
+            {% endfor %}
+          </select>
+        </label>
+      </div>
+      <div class="form-row">
+        <label>Gender
+          <select name="Gender" required>
+            {% for g in genders %}
+            <option value="{{ g }}" {{ 'selected' if form_data.get('Gender') == g }}>{{ g }}</option>
+            {% endfor %}
+          </select>
+        </label>
+        <label>Age
+          <input type="number" name="Age" min="0" max="110" required value="{{ form_data.get('Age', 45) }}">
+        </label>
+      </div>
+      <div class="form-row">
+        <label>Annual Income (&#8377;)
+          <input type="number" name="Income" min="0" step="1000" required value="{{ form_data.get('Income', 120000) }}">
+        </label>
+        <label>Bank Account Linked?
+          <select name="Bank_Account" required>
+            <option value="Yes" {{ 'selected' if form_data.get('Bank_Account') == 'Yes' }}>Yes</option>
+            <option value="No" {{ 'selected' if form_data.get('Bank_Account') == 'No' }}>No</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Claim Details</h3>
+      <div class="form-row">
+        <label>Claim Amount (&#8377;)
+          <input type="number" name="Claim_Amount" min="0" step="10" required value="{{ form_data.get('Claim_Amount', 5000) }}">
+        </label>
+        <label>Application Date
+          <input type="date" name="Application_Date" required value="{{ form_data.get('Application_Date', '2026-06-15') }}">
+        </label>
+      </div>
+      <div class="form-row">
+        <label>Claim Frequency (claims / year)
+          <input type="number" name="Claim_Frequency" min="0" max="30" required value="{{ form_data.get('Claim_Frequency', 2) }}">
+        </label>
+        <label>Transaction Count
+          <input type="number" name="Transaction_Count" min="0" max="50" required value="{{ form_data.get('Transaction_Count', 3) }}">
+        </label>
+      </div>
+    </div>
+
+    <div class="form-section">
+      <h3>Risk Indicators</h3>
+      <div class="form-row">
+        <label>Duplicate Aadhaar Number?
+          <select name="Duplicate_Aadhaar" required>
+            <option value="0" {{ 'selected' if form_data.get('Duplicate_Aadhaar') == '0' }}>No</option>
+            <option value="1" {{ 'selected' if form_data.get('Duplicate_Aadhaar') == '1' }}>Yes</option>
+          </select>
+        </label>
+        <label>Duplicate Mobile Number?
+          <select name="Duplicate_Mobile" required>
+            <option value="0" {{ 'selected' if form_data.get('Duplicate_Mobile') == '0' }}>No</option>
+            <option value="1" {{ 'selected' if form_data.get('Duplicate_Mobile') == '1' }}>Yes</option>
+          </select>
+        </label>
+      </div>
+      <div class="form-row">
+        <label>Previous Fraud History?
+          <select name="Previous_Fraud" required>
+            <option value="0" {{ 'selected' if form_data.get('Previous_Fraud') == '0' }}>No</option>
+            <option value="1" {{ 'selected' if form_data.get('Previous_Fraud') == '1' }}>Yes</option>
+          </select>
+        </label>
+        <label>Location Risk Category
+          <select name="Location_Risk" required>
+            {% for lvl in location_risk_levels %}
+            <option value="{{ lvl }}" {{ 'selected' if form_data.get('Location_Risk') == lvl }}>{{ lvl }}</option>
+            {% endfor %}
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-wide">Run Fraud Check</button>
+  </form>
+
+  <aside class="result-panel">
+    {% if error %}
+    <div class="result-card is-error">
+      <h3>Could not evaluate this claim</h3>
+      <p>{{ error }}</p>
+    </div>
+    {% elif result %}
+    <div class="result-card {{ 'is-alert' if result.prediction == 1 else 'is-safe' }}">
+      <div class="result-seal">
+        <svg viewBox="0 0 120 120" width="90" height="90">
+          <circle cx="60" cy="60" r="54" fill="none" stroke="currentColor" stroke-width="3"/>
+          <circle cx="60" cy="60" r="42" fill="none" stroke="currentColor" stroke-width="1.4"/>
+        </svg>
+        <span class="result-seal-label">{{ result.prediction_label }}</span>
+      </div>
+      <h3>{{ result.risk_level }}</h3>
+      <p class="result-prob">
+        Fraud probability <strong>{{ result.fraud_probability }}%</strong><br>
+        Genuine probability <strong>{{ result.genuine_probability }}%</strong>
+      </p>
+      <div class="result-bar">
+        <div class="result-bar-fill" style="width: {{ result.fraud_probability }}%;"></div>
+      </div>
+      <h4>Key Risk Indicators</h4>
+      <ul class="risk-list">
+        {% for indicator in result.key_risk_indicators %}
+        <li>{{ indicator }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% else %}
+    <div class="result-card is-placeholder">
+      <h3>Awaiting a claim</h3>
+      <p>Fill in the form and submit to see the fraud prediction, probability
+        score and the risk indicators that drove the decision.</p>
+    </div>
+    {% endif %}
+  </aside>
+</section>
+{% endblock %}
