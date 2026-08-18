@@ -1,0 +1,26 @@
+Beneficiary_ID,District,Scheme_Name,Gender,Age,Income,Claim_Amount,Application_Date,Claim_Frequency,Bank_Account,Duplicate_Aadhaar,Duplicate_Mobile,Previous_Fraud,Transaction_Count,Location_Risk,Actual_Fraud_Label
+AP-BEN-160613,Nandyal,Annadata,Female,60,154623,13230.77,2023-01-26,9,Yes,1,1,0,22,Medium,1
+AP-BEN-105373,Konaseema,Annadata,Female,48,116954,10106.33,2023-03-14,1,Yes,1,1,0,3,High,1
+AP-BEN-188410,East Godavari,Annadata,Female,43,208409,11522.92,2023-03-31,5,Yes,1,1,0,2,Low,1
+AP-BEN-129969,Srikakulam,Deepam 2.0,Female,47,150156,1160.1,2024-07-12,2,Yes,1,1,1,3,Low,1
+AP-BEN-125030,Anantapur,Deepam 2.0,Female,48,10000,1011.51,2024-06-05,3,Yes,1,1,1,3,Low,1
+AP-BEN-116361,Chittoor,Deepam 2.0,Female,47,108118,830.78,2025-06-26,11,Yes,1,0,0,17,High,1
+AP-BEN-123865,Kakinada,Deepam 2.0,Male,51,122715,744.78,2023-03-24,7,No,1,1,0,11,Low,1
+AP-BEN-129215,Palnadu,Deepam 2.0,Female,52,437716,1058.7,2024-07-08,1,Yes,1,1,0,5,High,1
+AP-BEN-146980,West Godavari,Deepam 2.0,Male,37,74874,883.96,2025-05-20,14,No,1,1,0,11,Medium,1
+AP-BEN-104256,Nandyal,NTR Bharosa Pension,Male,78,66190,2648.52,2025-09-26,7,Yes,1,1,0,10,Medium,1
+AP-BEN-116577,Kakinada,NTR Bharosa Pension,Male,76,77315,3974.23,2025-01-05,11,No,1,1,0,17,Medium,1
+AP-BEN-171758,Visakhapatnam,NTR Bharosa Pension,Female,72,63800,3020.11,2024-08-03,10,No,1,1,0,17,Medium,1
+AP-BEN-106192,Konaseema,NTR Bharosa Pension,Male,74,43651,3109.5,2024-03-03,8,Yes,1,1,0,16,Medium,1
+AP-BEN-121830,Nellore,NTR Bharosa Pension,Female,85,83068,3177.22,2023-01-26,14,Yes,1,1,1,24,Low,1
+AP-BEN-100533,East Godavari,NTR Bharosa Pension,Female,73,12362,3701.13,2025-11-15,2,Yes,1,1,1,7,Medium,1
+AP-BEN-144740,Prakasam,NTR Bharosa Pension,Male,73,41322,2663.13,2023-09-02,1,Yes,1,1,1,5,Medium,1
+AP-BEN-135088,Anakapalli,NTR Bharosa Pension,Male,70,84442,3359.31,2026-03-01,2,Yes,1,1,0,3,High,1
+AP-BEN-119164,Palnadu,Thalliki Vandanam,Female,39,141529,13682.06,2023-05-27,2,Yes,1,1,0,4,High,1
+AP-BEN-117368,Anantapur,Thalliki Vandanam,Female,29,146198,12391.95,2024-03-30,3,Yes,1,1,0,4,High,1
+AP-BEN-190100,Prakasam,Thalliki Vandanam,Female,37,139780,13597.19,2024-04-17,11,Yes,1,1,0,23,Medium,1
+AP-BEN-132190,Kurnool,Thalliki Vandanam,Female,42,80718,12321.12,2026-05-05,1,Yes,1,1,0,1,High,1
+AP-BEN-102672,Anakapalli,Thalliki Vandanam,Female,29,38146,12499.03,2025-09-20,5,No,1,1,0,7,Medium,1
+AP-BEN-138502,Prakasam,Thalliki Vandanam,Male,30,12499,13297.85,2023-03-09,1,No,1,1,0,4,High,1
+AP-BEN-131714,Tirupati,Thalliki Vandanam,Male,23,90347,12540.49,2023-04-23,3,Yes,1,1,1,3,Medium,1
+AP-BEN-119656,Kakinada,Thalliki Vandanam,Male,36,113488,12722.99,2026-04-17,2,Yes,1,0,1,2,High,1
