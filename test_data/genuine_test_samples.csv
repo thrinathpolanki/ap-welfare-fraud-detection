@@ -1,0 +1,26 @@
+Beneficiary_ID,District,Scheme_Name,Gender,Age,Income,Claim_Amount,Application_Date,Claim_Frequency,Bank_Account,Duplicate_Aadhaar,Duplicate_Mobile,Previous_Fraud,Transaction_Count,Location_Risk,Actual_Fraud_Label
+AP-BEN-129266,Anakapalli,Annadata,Female,52,97209,13176.41,2023-08-14,2,Yes,1,0,0,6,Low,0
+AP-BEN-138244,Kakinada,Annadata,Female,55,75421,12867.2,2024-10-13,4,Yes,0,0,0,4,Low,0
+AP-BEN-159451,Konaseema,Annadata,Male,49,106194,12907.84,2025-09-17,3,Yes,1,1,0,4,Low,0
+AP-BEN-161255,Guntur,Annadata,Male,59,140714,12939.58,2025-03-10,2,No,1,1,0,5,Low,0
+AP-BEN-175015,YSR Kadapa,Annadata,Female,48,169168,11468.15,2026-01-18,5,Yes,0,1,0,3,Low,0
+AP-BEN-126852,Kurnool,Annadata,Female,41,194174,13401.87,2024-08-07,3,Yes,1,0,0,3,Medium,0
+AP-BEN-176616,Prakasam,Annadata,Female,56,117472,12391.8,2024-02-17,1,Yes,1,0,0,1,Low,0
+AP-BEN-179976,Guntur,Deepam 2.0,Female,44,38261,1181.84,2023-11-15,11,Yes,1,0,0,13,Low,0
+AP-BEN-180363,Konaseema,Deepam 2.0,Male,39,47210,829.03,2026-05-22,2,Yes,0,1,0,3,Medium,0
+AP-BEN-123796,Guntur,Deepam 2.0,Male,38,90675,5364.533137982197,2026-01-08,9,Yes,0,1,0,13,Medium,0
+AP-BEN-131905,Kakinada,Deepam 2.0,Male,52,202023,530.27,2025-09-11,3,No,0,0,0,7,Medium,0
+AP-BEN-150275,Nandyal,NTR Bharosa Pension,Male,90,64335,3656.73,2026-02-10,10,Yes,0,1,1,12,Low,0
+AP-BEN-122036,Srikakulam,NTR Bharosa Pension,Male,68,101519,2794.19,2025-03-14,2,Yes,1,0,0,4,Medium,0
+AP-BEN-161781,Annamayya,NTR Bharosa Pension,Female,85,29970,16560.22849560484,2026-03-08,2,Yes,1,1,0,2,Medium,0
+AP-BEN-121914,Prakasam,NTR Bharosa Pension,Male,60,29743,3689.2,2023-12-22,2,No,0,1,0,2,Low,0
+AP-BEN-165686,Nellore,NTR Bharosa Pension,Female,70,54195,3494.48,2025-02-22,3,Yes,1,0,0,3,Low,0
+AP-BEN-170631,Annamayya,NTR Bharosa Pension,Male,78,92632,3378.12,2024-08-18,2,Yes,1,0,1,1,Medium,0
+AP-BEN-161884,East Godavari,NTR Bharosa Pension,Female,72,100490,3686.26,2023-11-22,5,Yes,1,0,0,5,Low,0
+AP-BEN-167329,Kakinada,NTR Bharosa Pension,Male,65,87288,2638.25,2024-03-02,1,Yes,1,1,0,1,Low,0
+AP-BEN-141738,Palnadu,Thalliki Vandanam,Female,39,99722,13662.16,2024-05-26,2,Yes,1,1,0,5,High,0
+AP-BEN-172016,Kurnool,Thalliki Vandanam,Female,32,133876,12078.09,2026-02-18,3,No,0,0,0,5,Low,0
+AP-BEN-164770,Nandyal,Thalliki Vandanam,Female,35,10000,14577.77,2024-06-24,2,Yes,0,1,0,7,Low,0
+AP-BEN-153065,Sri Sathya Sai,Thalliki Vandanam,Female,39,144741,14805.24,2023-10-03,1,Yes,1,1,0,5,Medium,0
+AP-BEN-183839,Sri Sathya Sai,Thalliki Vandanam,Male,24,175046,13167.07,2023-07-04,1,Yes,1,1,0,2,Low,0
+AP-BEN-125286,Eluru,Thalliki Vandanam,Male,36,68354,12638.66,2024-12-06,4,Yes,0,1,0,4,Low,0
